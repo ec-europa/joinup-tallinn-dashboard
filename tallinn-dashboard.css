@@ -1,0 +1,20 @@
+.tallinn-chart__selector-container span {
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  margin-right: 0.5rem;
+  background-color: transparent; }
+
+.tallinn-chart__legend {
+  padding: 0 1rem;
+  border: 1px solid #EEE;
+  margin-top: 1rem; }
+  .tallinn-chart__legend span {
+    width: 1rem;
+    height: 1rem;
+    display: inline-flex;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    float: left; }
+
+/*# sourceMappingURL=tallinn-dashboard.css.map */
