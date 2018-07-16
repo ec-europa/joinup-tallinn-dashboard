@@ -254,7 +254,7 @@ const init = (
   // add CSV download event listener
   document.querySelector(csvButtonClass).addEventListener('click', e => {
     chart.downloadCSV();
-})
+  })
 
   return {
     dataSet,
@@ -266,7 +266,7 @@ const init = (
   };
 };
 
-(() => {
+((drupalSettings) => {
   const req = new XMLHttpRequest();
 req.overrideMimeType('application/json');
 req.open( 'GET', 'https://gist.githubusercontent.com/degliwe/948ddae614475ddb13003e8c624653cd/raw/e3da034f38682ed6917c624cf042824038cd5b58/talinn.json', true);
@@ -304,4 +304,4 @@ req.onload = () => {
   TALLINNHI.setSeries();
 };
 req.send();
-})();
+})(drupalSettings);

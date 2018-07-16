@@ -1,7 +1,7 @@
 ## Development
 
 Edit the files in `src/`. Use the [Babel](https://babeljs.io/) transpiler to
-compile the files into `lib/`:
+compile the files:
 
 ### Using Yarn
 
@@ -18,5 +18,5 @@ $ yarn add --dev babel-cli babel-core babel-preset-env
 #### Transpile
 
 ```
-$ ./node_modules/.bin/babel src -d lib
+$ ./node_modules/.bin/babel src -d .
 ```

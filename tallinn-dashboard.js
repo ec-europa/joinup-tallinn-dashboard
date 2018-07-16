@@ -239,7 +239,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
   };
 };
 
-(function () {
+(function (drupalSettings) {
   var req = new XMLHttpRequest();
   req.overrideMimeType('application/json');
   req.open('GET', 'https://gist.githubusercontent.com/degliwe/948ddae614475ddb13003e8c624653cd/raw/e3da034f38682ed6917c624cf042824038cd5b58/talinn.json', true);
@@ -251,4 +251,4 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
     TALLINNHI.setSeries();
   };
   req.send();
-})();
+})(drupalSettings);
