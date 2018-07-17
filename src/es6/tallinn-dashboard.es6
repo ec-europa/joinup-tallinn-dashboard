@@ -269,9 +269,8 @@ const init = (
 ((drupalSettings) => {
   const req = new XMLHttpRequest();
 req.overrideMimeType('application/json');
-req.open( 'GET', 'https://gist.githubusercontent.com/degliwe/948ddae614475ddb13003e8c624653cd/raw/e3da034f38682ed6917c624cf042824038cd5b58/talinn.json', true);
+req.open('GET', drupalSettings.tallinn.dataEndpoint, true);
 req.onload = () => {
-  doc =  req.responseText;// for testing purposes only
   const TALLINNHI = init(
     JSON.parse(req.responseText),
     'tallinn-chart__container',

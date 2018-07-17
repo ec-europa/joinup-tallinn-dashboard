@@ -242,9 +242,8 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
 (function (drupalSettings) {
   var req = new XMLHttpRequest();
   req.overrideMimeType('application/json');
-  req.open('GET', 'https://gist.githubusercontent.com/degliwe/948ddae614475ddb13003e8c624653cd/raw/e3da034f38682ed6917c624cf042824038cd5b58/talinn.json', true);
+  req.open('GET', drupalSettings.tallinn.dataEndpoint, true);
   req.onload = function () {
-    doc = req.responseText; // for testing purposes only
     var TALLINNHI = init(JSON.parse(req.responseText), 'tallinn-chart__container', ['select1', 'select2', 'select3'], '.tallinn-chart__button--csv', '.tallinn-chart__selector-container', '.tallinn-chart__selector', '.tallinn-chart__country', '.tallinn-chart__description', '.tallinn-chart__body', 'All members', ['#0399FB', '#F13601'], '.tallinn-chart__legend', [{ color: '', label: '' }, { color: '#aaa', label: 'No data' }, { color: '#faa', label: 'Not started' }, { color: '#fc0', label: 'In progress' }, { color: '#BC7', label: 'Implemented' }], ['', 'No data', 'No progress (no steps taken yet,…)', 'Measures are being taken, in progress', 'Action implemented/completed']);
 
     // Draw
