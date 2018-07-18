@@ -110,15 +110,14 @@ const init = (
           el => Object.keys(el.countries).forEach(
           key => {
           if(key == d1.options[d1.selectedIndex].value){
-          document.querySelector(bodyClass).insertAdjacentHTML(
-            'beforeend',
-            `<h5>${el.countries[key].country_name}</h5>
-                  <h6>${dataSet[index].description}</h6>
-                  <p>${el.countries[key].report}</p>
-                  <p>Status: ${el.countries[key].status}</p>
-                  <p>Related website: 
-                   <a href="${el.countries[key].related_website}">${el.countries[key].related_website}</a>
-                  </p>`)
+            let relatedWebsite = el.countries[key].related_website === null ? '[not provided]' : ('<a href="' + el.countries[key].related_website + '">' + el.countries[key].related_website + '</a>');
+            document.querySelector(bodyClass).insertAdjacentHTML(
+             'beforeend',
+              `<h5>${el.countries[key].country_name}</h5>
+                    <h6>${dataSet[index].description}</h6>
+                    <p>${el.countries[key].report}</p>
+                    <p>Status: ${el.countries[key].status}</p>  
+                    <p>Related website: ${relatedWebsite}</p>`)
         }}
       ))
       }
