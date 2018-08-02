@@ -245,7 +245,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
   req.overrideMimeType('application/json');
   req.open('GET', drupalSettings.tallinn.dataEndpoint, true);
   req.onload = function () {
-    var TALLINNHI = init(JSON.parse(req.responseText), 'tallinn-chart__container', ['select1', 'select2', 'select3'], '.tallinn-chart__button--csv', '.tallinn-chart__selector-container', '.tallinn-chart__selector', '.tallinn-chart__country', '.tallinn-chart__description', '.tallinn-chart__body', 'All members', ['#0399FB', '#F13601'], '.tallinn-chart__legend', [{ color: '', label: '' }, { color: '#aaa', label: 'No data' }, { color: '#faa', label: 'Not started' }, { color: '#fc0', label: 'In progress' }, { color: '#BC7', label: 'Implemented' }], ['', 'No data', 'No progress (no steps taken yet,…)', 'Measures are being taken, in progress', 'Action implemented/completed']);
+    var TALLINNHI = init(JSON.parse(req.responseText), 'tallinn-chart__container', ['select1', 'select2', 'select3'], '.tallinn-chart__button--csv', '.tallinn-chart__selector-container', '.tallinn-chart__selector', '.tallinn-chart__country', '.tallinn-chart__description', '.tallinn-chart__body', 'All members', ['#0399FB', '#F13601'], '.tallinn-chart__legend', [{ color: '', label: '' }, { color: '#aaa', label: 'No data' }, { color: '#faa', label: 'No progress' }, { color: '#fc0', label: 'In progress' }, { color: '#BC7', label: 'Completed' }], ['', 'No data', 'No progress', 'In progress', 'Completed']);
 
     // Draw
     TALLINNHI.setSeries();
