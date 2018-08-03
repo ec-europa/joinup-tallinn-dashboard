@@ -286,15 +286,15 @@ req.onload = () => {
     [
       { color: '', label: '' },
       { color: '#aaa', label: 'No data' },
-      { color: '#faa', label: 'Not started' },
+      { color: '#faa', label: 'No progress' },
       { color: '#fc0', label: 'In progress' },
-      { color: '#BC7', label: 'Implemented' }
+      { color: '#BC7', label: 'Completed' }
     ],
     [
       '',
-      'No data', 'No progress (no steps taken yet,…)',
-      'Measures are being taken, in progress',
-      'Action implemented/completed'
+      'No data', 'No progress',
+      'In progress',
+      'Completed'
     ]
   );
 
