@@ -10,7 +10,9 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
   var chart = Highcharts.chart(highchartContainerId, {
     chart: {
       polar: true,
-      type: 'area'
+      type: 'area',
+      marginLeft: 70,
+      marginRight: 70
     },
 
     title: {
@@ -74,7 +76,26 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
 
     legend: {
       enabled: false
+    },
+    
+   responsive: {
+      rules: [{
+          condition: {
+              maxWidth: 480
+          },
+          // Make the labels less space demanding on mobile
+          chartOptions: {
+              xAxis: {
+                  labels: {
+                      formatter: function () {
+                          return String(this.value).substring(0, 10)+"...";
+                      }
+                  }
+              }
+          }
+      }]
     }
+    
   });
 
   var setState = function setState(newState) {
