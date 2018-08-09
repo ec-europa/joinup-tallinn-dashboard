@@ -20,7 +20,7 @@ $ yarn add --dev babel-cli babel-core babel-preset-env
 ##### Transpile
 
 ```
-$ ./node_modules/.bin/babel src/es6 -d .
+$ ./node_modules/.bin/babel src/es6 -d dist/
 ```
 
 ### CSS
@@ -32,5 +32,5 @@ TBD.
 ##### Compile
 
 ```
-$ scss --update src/scss/tallinn-dashboard.scss:./tallinn-dashboard.css
+$ scss --update src/scss/tallinn-dashboard.scss:dist/tallinn-dashboard.css
 ```
