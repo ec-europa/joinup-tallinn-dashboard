@@ -77,25 +77,24 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
     legend: {
       enabled: false
     },
-    
-   responsive: {
+
+    responsive: {
       rules: [{
-          condition: {
-              maxWidth: 480
-          },
-          // Make the labels less space demanding on mobile
-          chartOptions: {
-              xAxis: {
-                  labels: {
-                      formatter: function () {
-                          return String(this.value).substring(0, 10)+"...";
-                      }
-                  }
+        condition: {
+          maxWidth: 480
+        },
+        // Make the labels less space demanding on mobile
+        chartOptions: {
+          xAxis: {
+            labels: {
+              formatter: function formatter() {
+                return String(this.value).substring(0, 10) + "...";
               }
+            }
           }
+        }
       }]
     }
-    
   });
 
   var setState = function setState(newState) {
