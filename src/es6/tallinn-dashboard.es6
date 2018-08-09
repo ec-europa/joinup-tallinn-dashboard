@@ -23,6 +23,8 @@ const init = (
       chart: {
         polar: true,
         type: 'area',
+        marginLeft: 70,
+        marginRight: 70
       },
 
       title: {
@@ -86,6 +88,24 @@ const init = (
   legend: {
     enabled: false
   },
+    
+   responsive: {
+      rules: [{
+          condition: {
+              maxWidth: 480
+          },
+          // Make the labels less space demanding on mobile
+          chartOptions: {
+              xAxis: {
+                  labels: {
+                      formatter: function () {
+                          return String(this.value).substring(0, 10)+"...";
+                      }
+                  }
+              }
+          }
+      }]
+    },
 });
 
   const setState = newState => {
