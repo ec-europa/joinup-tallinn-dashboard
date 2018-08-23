@@ -190,10 +190,10 @@ const init = (
                     "</a>";
               document.querySelector(bodyClass).insertAdjacentHTML(
                 "beforeend",
-                `<h5>${el.countries[key].country_name}</h5>
-                    <h6>${dataSet[index].description}</h6>
+                  `<h3>${el.countries[key].country_name}</h3>
+                    <p>${dataSet[index].description}</p>
                     <p>${el.countries[key].report}</p>
-                    <p>Status: ${el.countries[key].status}</p>  
+                    <p>Status: <span class="${el.countries[key].status.toLowerCase().replace(' ', '-')}">${el.countries[key].status}</span></p>  
                     <p>Related website: ${relatedWebsite}</p>`
               );
             }
