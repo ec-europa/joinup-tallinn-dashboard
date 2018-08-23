@@ -1,33 +1,77 @@
-'use strict';
+"use strict";
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+// Polyfill Object.assign()
+if (typeof Object.assign != "function") {
+  // Must be writable: true, enumerable: false, configurable: true
+  Object.defineProperty(Object, "assign", {
+    value: function assign(target, varArgs) {
+      // .length of function is 2
+      "use strict";
+
+      if (target == null) {
+        // TypeError if undefined or null
+        throw new TypeError("Cannot convert undefined or null to object");
+      }
+
+      var to = Object(target);
+
+      for (var index = 1; index < arguments.length; index++) {
+        var nextSource = arguments[index];
+
+        if (nextSource != null) {
+          // Skip over if undefined or null
+          for (var nextKey in nextSource) {
+            // Avoid bugs when hasOwnProperty is shadowed
+            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+              to[nextKey] = nextSource[nextKey];
+            }
+          }
+        }
+      }
+      return to;
+    },
+    writable: true,
+    configurable: true
+  });
+}
+// Polyfill NodeList.prototype.forEach()
+if (window.NodeList && !NodeList.prototype.forEach) {
+  NodeList.prototype.forEach = function (callback, thisArg) {
+    thisArg = thisArg || window;
+    for (var i = 0; i < this.length; i++) {
+      callback.call(thisArg, this[i], i, this);
+    }
+  };
+}
+
 var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonClass, dropdownContainersClass, dropdownClass, titleClass, descriptionClass, bodyClass, allMembersString, seriesColors, legendClass, legendData, statuses) {
   var state = dropdownIds.reduce(function (a, b) {
-    return Object.assign({}, a, _defineProperty({}, b, ''));
+    return Object.assign({}, a, _defineProperty({}, b, ""));
   }, {});
 
   var chart = Highcharts.chart(highchartContainerId, {
     chart: {
       polar: true,
-      type: 'area',
+      type: "area",
       marginLeft: 70,
       marginRight: 70
     },
 
     title: {
-      text: ''
+      text: ""
     },
 
     pane: {
-      size: '90%',
+      size: "90%",
       startAngle: 0
     },
 
     xAxis: {
       allowDecimals: false,
       categories: [],
-      tickmarkPlacement: 'on',
+      tickmarkPlacement: "on",
       lineWidth: 0
     },
 
@@ -43,8 +87,8 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
       labels: {
         enabled: false
       },
-      gridLineDashStyle: 'dot',
-      gridLineInterpolation: 'polygon',
+      gridLineDashStyle: "dot",
+      gridLineInterpolation: "polygon",
       lineWidth: 0,
       max: 4,
       min: 0
@@ -63,11 +107,11 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
       formatter: function formatter() {
         var s = dataSet[this.points[0].point.index].description;
         this.points.forEach(function (current) {
-          s += '<br/><b>' + current.series.name + ':</b> ' + statuses[Math.round(current.y)];
+          s += "<br/><b>" + current.series.name + ":</b> " + statuses[Math.round(current.y)];
         });
         return s;
       }
-    }, 'shared', true),
+    }, "shared", true),
     plotOptions: {
       series: {
         fillOpacity: 0.4
@@ -103,13 +147,13 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
   };
 
   var setLabels = function setLabels(index) {
-    document.querySelector(titleClass).innerHTML = '';
-    document.querySelector(bodyClass).innerHTML = '';
-    document.querySelector(descriptionClass).innerHTML = '';
+    document.querySelector(titleClass).innerHTML = "";
+    document.querySelector(bodyClass).innerHTML = "";
+    document.querySelector(descriptionClass).innerHTML = "";
 
     if (index !== null) {
-      if (index === '') {
-        chart.setTitle({ text: '' });
+      if (index === "") {
+        chart.setTitle({ text: "" });
         chart.xAxis[0].setCategories(dataSet.map(function (el) {
           return el.principle;
         }));
@@ -122,8 +166,8 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
         dataSet[index].actions.map(function (el) {
           return Object.keys(el.countries).forEach(function (key) {
             if (key == d1.options[d1.selectedIndex].value) {
-              var relatedWebsite = el.countries[key].related_website === null ? '[not provided]' : '<a href="' + el.countries[key].related_website + '">' + el.countries[key].related_website + '</a>';
-              document.querySelector(bodyClass).insertAdjacentHTML('beforeend', '<h5>' + el.countries[key].country_name + '</h5>\n                    <h6>' + dataSet[index].description + '</h6>\n                    <p>' + el.countries[key].report + '</p>\n                    <p>Status: ' + el.countries[key].status + '</p>  \n                    <p>Related website: ' + relatedWebsite + '</p>');
+              var relatedWebsite = el.countries[key].related_website === null ? "[not provided]" : '<a href="' + el.countries[key].related_website + '">' + el.countries[key].related_website + "</a>";
+              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<h5>" + el.countries[key].country_name + "</h5>\n                    <h6>" + dataSet[index].description + "</h6>\n                    <p>" + el.countries[key].report + "</p>\n                    <p>Status: " + el.countries[key].status + "</p>  \n                    <p>Related website: " + relatedWebsite + "</p>");
             }
           });
         });
@@ -145,7 +189,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
     var data1 = [];
     var data2 = [];
 
-    if (state[dropdownIds[2]] === '') {
+    if (state[dropdownIds[2]] === "") {
       // All Principles - calculate the average
       dataSet.forEach(function (e) {
         var total1 = 0;
@@ -194,32 +238,32 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
   };
 
   // add colors for country labels
-  document.querySelectorAll(dropdownContainersClass + ' span').forEach(function (el, i) {
-    return el.style['background-color'] = seriesColors[i];
+  document.querySelectorAll(dropdownContainersClass + " span").forEach(function (el, i) {
+    return el.style["background-color"] = seriesColors[i];
   });
 
   // populate Principles inside 3rd dropdown
   dataSet.forEach(function (k, i) {
-    var opt = document.createElement('option');
+    var opt = document.createElement("option");
     opt.value = i;
     opt.innerHTML = k.principle;
-    document.querySelector('#' + dropdownIds[2]).appendChild(opt);
+    document.querySelector("#" + dropdownIds[2]).appendChild(opt);
   });
 
   // populate the legend
   legendData.reverse().map(function (l) {
-    var li = document.createElement('li');
-    var s = document.createElement('span');
+    var li = document.createElement("li");
+    var s = document.createElement("span");
 
     li.innerHTML = l.label;
-    s.style.cssText = 'background-color: ' + l.color;
+    s.style.cssText = "background-color: " + l.color;
     li.insertBefore(s, null);
-    document.querySelector(legendClass + ' ul').appendChild(li);
+    document.querySelector(legendClass + " ul").appendChild(li);
   });
 
   // Init categories based on the 3rd dropdown
   var d1 = document.getElementById(dropdownIds[0]);
-  setLabels(document.querySelector('#' + dropdownIds[2]).value);
+  setLabels(document.querySelector("#" + dropdownIds[2]).value);
 
   // add event listeners
   document.querySelectorAll(dropdownClass).forEach(function (el) {
@@ -227,7 +271,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
     setState(_defineProperty({}, el.id, el.value));
 
     // Add an event listeners to selects
-    el.addEventListener('change', function (evt) {
+    el.addEventListener("change", function (evt) {
       setState(_defineProperty({}, evt.currentTarget.id, evt.currentTarget.value));
 
       // Principle dropdown, change categories and tiles
@@ -237,7 +281,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
 
       if (evt.currentTarget.id === dropdownIds[0]) {
         var _d = document.getElementById(dropdownIds[0]);
-        setLabels(document.querySelector('#' + dropdownIds[2]).value);
+        setLabels(document.querySelector("#" + dropdownIds[2]).value);
       }
 
       // redraw
@@ -246,7 +290,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
   });
 
   // add CSV download event listener
-  document.querySelector(csvButtonClass).addEventListener('click', function (e) {
+  document.querySelector(csvButtonClass).addEventListener("click", function (e) {
     chart.downloadCSV();
   });
 
@@ -262,10 +306,10 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
 
 (function (drupalSettings) {
   var req = new XMLHttpRequest();
-  req.overrideMimeType('application/json');
-  req.open('GET', drupalSettings.tallinn.dataEndpoint, true);
+  req.overrideMimeType("application/json");
+  req.open("GET", drupalSettings.tallinn.dataEndpoint, true);
   req.onload = function () {
-    var TALLINNHI = init(JSON.parse(req.responseText), 'tallinn-chart__container', ['select1', 'select2', 'select3'], '.tallinn-chart__button--csv', '.tallinn-chart__selector-container', '.tallinn-chart__selector', '.tallinn-chart__country', '.tallinn-chart__description', '.tallinn-chart__body', 'All members', ['#0399FB', '#F13601'], '.tallinn-chart__legend', [{ color: '', label: '' }, { color: '#aaa', label: 'No data' }, { color: '#faa', label: 'No progress' }, { color: '#fc0', label: 'In progress' }, { color: '#BC7', label: 'Completed' }], ['', 'No data', 'No progress', 'In progress', 'Completed']);
+    var TALLINNHI = init(JSON.parse(req.responseText), "tallinn-chart__container", ["select1", "select2", "select3"], ".tallinn-chart__button--csv", ".tallinn-chart__selector-container", ".tallinn-chart__selector", ".tallinn-chart__country", ".tallinn-chart__description", ".tallinn-chart__body", "All members", ["#0399FB", "#F13601"], ".tallinn-chart__legend", [{ color: "", label: "" }, { color: "#aaa", label: "No data" }, { color: "#faa", label: "No progress" }, { color: "#fc0", label: "In progress" }, { color: "#BC7", label: "Completed" }], ["", "No data", "No progress", "In progress", "Completed"]);
 
     // Draw
     TALLINNHI.setSeries();
