@@ -176,6 +176,11 @@ const init = (
         chart.xAxis[0].setCategories(
           dataSet[index].actions.map(el => el.title)
         );
+        
+        document.querySelector(bodyClass).insertAdjacentHTML(
+          "beforeend",
+            `<p>${dataSet[index].description}</p>`
+        );
 
         dataSet[index].actions.map(el =>
           Object.keys(el.countries).forEach(key => {
@@ -191,7 +196,7 @@ const init = (
               document.querySelector(bodyClass).insertAdjacentHTML(
                 "beforeend",
                   `<h3>${el.countries[key].country_name}</h3>
-                    <p>${dataSet[index].description}</p>
+                    <p>${el.explanation}</p>
                     <p>${el.countries[key].report}</p>
                     <p>Status: <span class="${el.countries[key].status.toLowerCase().replace(' ', '-')}">${el.countries[key].status}</span></p>  
                     <p>Related website: ${relatedWebsite}</p>`
