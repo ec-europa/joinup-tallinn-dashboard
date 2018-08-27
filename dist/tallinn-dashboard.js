@@ -163,11 +163,13 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
           return el.title;
         }));
 
+        document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<p>" + dataSet[index].description + "</p>");
+
         dataSet[index].actions.map(function (el) {
           return Object.keys(el.countries).forEach(function (key) {
             if (key == d1.options[d1.selectedIndex].value) {
               var relatedWebsite = el.countries[key].related_website === null ? "[not provided]" : '<a href="' + el.countries[key].related_website + '">' + el.countries[key].related_website + "</a>";
-              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<h3>" + el.countries[key].country_name + "</h3>\n                    <p>" + dataSet[index].description + "</p>\n                    <p>" + el.countries[key].report + "</p>\n                    <p>Status: <span class=\"" + el.countries[key].status.toLowerCase().replace(' ', '-') + "\">" + el.countries[key].status + "</span></p>  \n                    <p>Related website: " + relatedWebsite + "</p>");
+              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<h3>" + el.countries[key].country_name + "</h3>\n                    <p>" + el.explanation + "</p>\n                    <p>" + el.countries[key].report + "</p>\n                    <p>Status: <span class=\"" + el.countries[key].status.toLowerCase().replace(' ', '-') + "\">" + el.countries[key].status + "</span></p>  \n                    <p>Related website: " + relatedWebsite + "</p>");
             }
           });
         });
