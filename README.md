@@ -20,7 +20,7 @@ $ yarn add --dev babel-cli babel-core babel-preset-env
 ##### Transpile
 
 ```
-$ ./node_modules/.bin/babel src/es6 -d dist/
+$ yarn dist:js
 ```
 
 ### CSS
