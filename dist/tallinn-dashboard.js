@@ -172,7 +172,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
           return Object.keys(el.countries).forEach(function (key) {
             if (key == d1.options[d1.selectedIndex].value) {
               var relatedWebsite = el.countries[key].related_website === null ? "[not provided]" : '<a href="' + el.countries[key].related_website + '">' + el.countries[key].related_website + "</a>";
-              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<p>" + el.explanation + "</p>\n                <p>" + el.countries[key].report + "</p>\n                <p>Status: \n                    <span class=\"" + el.countries[key].status.toLowerCase().replace(" ", "-") + "\">\n                    " + el.countries[key].status + "\n                    </span>\n                </p>\n                <p>Related website: " + relatedWebsite + "</p>");
+              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<p><strong>" + el.title + " - " + el.explanation + "</strong></p>\n                <p>" + el.countries[key].report + "</p>\n                <p>Status: \n                    <span class=\"" + el.countries[key].status.toLowerCase().replace(" ", "-") + "\">\n                    " + el.countries[key].status + "\n                    </span>\n                </p>\n                <p>Related website: " + relatedWebsite + "</p>");
             }
           });
         });

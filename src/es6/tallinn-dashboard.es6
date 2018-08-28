@@ -202,7 +202,7 @@ const init = (
                     "</a>";
               document.querySelector(bodyClass).insertAdjacentHTML(
                 "beforeend",
-                `<p>${el.explanation}</p>
+                `<p><strong>${el.title} - ${el.explanation}</strong></p>
                 <p>${el.countries[key].report}</p>
                 <p>Status: 
                     <span class="${el.countries[key].status
