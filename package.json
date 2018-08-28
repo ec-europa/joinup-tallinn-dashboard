@@ -11,8 +11,9 @@
     "babel-preset-env": "^1.7.0"
   },
   "babel": {
-    "presets": [
-      "env"
-    ]
+    "presets": ["env"]
+  },
+  "scripts": {
+    "dist:js": "./node_modules/.bin/babel src/es6 -d dist/"
   }
 }
