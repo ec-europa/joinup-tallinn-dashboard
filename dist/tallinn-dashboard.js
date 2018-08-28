@@ -47,6 +47,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
 }
 
 var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonClass, dropdownContainersClass, dropdownClass, titleClass, descriptionClass, bodyClass, allMembersString, seriesColors, legendClass, legendData, statuses) {
+  var currPrinciple = void 0;
   var state = dropdownIds.reduce(function (a, b) {
     return Object.assign({}, a, _defineProperty({}, b, ""));
   }, {});
@@ -105,7 +106,8 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
       followPointer: true,
       shared: true,
       formatter: function formatter() {
-        var s = dataSet[this.points[0].point.index].description;
+        var s = currPrinciple ? dataSet[currPrinciple].actions[this.points[0].point.index].explanation : dataSet[this.points[0].point.index].description;
+
         this.points.forEach(function (current) {
           s += "<br/><b>" + current.series.name + ":</b> " + statuses[Math.round(current.y)];
         });
@@ -147,6 +149,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
   };
 
   var setLabels = function setLabels(index) {
+    currPrinciple = index;
     document.querySelector(titleClass).innerHTML = "";
     document.querySelector(bodyClass).innerHTML = "";
     document.querySelector(descriptionClass).innerHTML = "";
@@ -163,13 +166,13 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
           return el.title;
         }));
 
-        document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<p>" + dataSet[index].description + "</p>");
+        document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<h3>" + d1.options[d1.selectedIndex].innerText + "</h3>\n          <p>" + dataSet[index].description + "</p>");
 
         dataSet[index].actions.map(function (el) {
           return Object.keys(el.countries).forEach(function (key) {
             if (key == d1.options[d1.selectedIndex].value) {
               var relatedWebsite = el.countries[key].related_website === null ? "[not provided]" : '<a href="' + el.countries[key].related_website + '">' + el.countries[key].related_website + "</a>";
-              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<h3>" + el.countries[key].country_name + "</h3>\n                    <p>" + el.explanation + "</p>\n                    <p>" + el.countries[key].report + "</p>\n                    <p>Status: <span class=\"" + el.countries[key].status.toLowerCase().replace(' ', '-') + "\">" + el.countries[key].status + "</span></p>  \n                    <p>Related website: " + relatedWebsite + "</p>");
+              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<p>" + el.explanation + "</p>\n                <p>" + el.countries[key].report + "</p>\n                <p>Status: \n                    <span class=\"" + el.countries[key].status.toLowerCase().replace(" ", "-") + "\">\n                    " + el.countries[key].status + "\n                    </span>\n                </p>\n                <p>Related website: " + relatedWebsite + "</p>");
             }
           });
         });

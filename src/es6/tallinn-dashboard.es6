@@ -57,6 +57,7 @@ const init = (
   legendData,
   statuses
 ) => {
+  let currPrinciple;
   let state = dropdownIds.reduce(
     (a, b) => Object.assign({}, a, { [b]: "" }),
     {}
@@ -114,7 +115,11 @@ const init = (
       followPointer: true,
       shared: true,
       formatter: function() {
-        var s = dataSet[this.points[0].point.index].description;
+        var s = currPrinciple
+          ? dataSet[currPrinciple].actions[this.points[0].point.index]
+              .explanation
+          : dataSet[this.points[0].point.index].description;
+
         this.points.forEach(function(current) {
           s +=
             "<br/><b>" +
@@ -163,6 +168,7 @@ const init = (
   };
 
   const setLabels = index => {
+    currPrinciple = index;
     document.querySelector(titleClass).innerHTML = "";
     document.querySelector(bodyClass).innerHTML = "";
     document.querySelector(descriptionClass).innerHTML = "";
@@ -176,10 +182,11 @@ const init = (
         chart.xAxis[0].setCategories(
           dataSet[index].actions.map(el => el.title)
         );
-        
+
         document.querySelector(bodyClass).insertAdjacentHTML(
           "beforeend",
-            `<p>${dataSet[index].description}</p>`
+          `<h3>${d1.options[d1.selectedIndex].innerText}</h3>
+          <p>${dataSet[index].description}</p>`
         );
 
         dataSet[index].actions.map(el =>
@@ -195,11 +202,16 @@ const init = (
                     "</a>";
               document.querySelector(bodyClass).insertAdjacentHTML(
                 "beforeend",
-                  `<h3>${el.countries[key].country_name}</h3>
-                    <p>${el.explanation}</p>
-                    <p>${el.countries[key].report}</p>
-                    <p>Status: <span class="${el.countries[key].status.toLowerCase().replace(' ', '-')}">${el.countries[key].status}</span></p>  
-                    <p>Related website: ${relatedWebsite}</p>`
+                `<p>${el.explanation}</p>
+                <p>${el.countries[key].report}</p>
+                <p>Status: 
+                    <span class="${el.countries[key].status
+                      .toLowerCase()
+                      .replace(" ", "-")}">
+                    ${el.countries[key].status}
+                    </span>
+                </p>
+                <p>Related website: ${relatedWebsite}</p>`
               );
             }
           })
