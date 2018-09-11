@@ -14,6 +14,8 @@
 .tallinn-chart__selector-container .form-type-select {
   display: inline-flex;
   max-width: 100%; }
+.tallinn-chart__selector-container .tallinn-chart__selector {
+  width: 100%; }
 
 .tallinn-chart__legend {
   padding: 0 1rem;
