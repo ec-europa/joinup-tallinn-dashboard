@@ -104,6 +104,12 @@ const init = (
       min: 0
     },
 
+    exporting: {
+      csv: {
+        itemDelimiter: ";"
+      }
+    },
+
     navigation: {
       buttonOptions: {
         enabled: false

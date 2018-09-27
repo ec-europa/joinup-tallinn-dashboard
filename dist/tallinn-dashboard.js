@@ -95,6 +95,12 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
       min: 0
     },
 
+    exporting: {
+      csv: {
+        itemDelimiter: ";"
+      }
+    },
+
     navigation: {
       buttonOptions: {
         enabled: false
