@@ -210,7 +210,7 @@ const init = (
                 "beforeend",
                 `<p><strong>${el.title} - ${el.explanation}</strong></p>
                 <p>${el.countries[key].report}</p>
-                <p>Status: 
+                <p>Status:
                     <span class="${el.countries[key].status
                       .toLowerCase()
                       .replace(" ", "-")}">
@@ -256,8 +256,12 @@ const init = (
           }
         });
 
-        data1.push(total1 / Object.keys(e.actions).length);
-        data2.push(total2 / Object.keys(e.actions).length);
+        data1.push(
+          parseFloat((total1 / Object.keys(e.actions).length).toFixed(1))
+        );
+        data2.push(
+          parseFloat((total2 / Object.keys(e.actions).length).toFixed(1))
+        );
       });
     } else {
       // on a selected principle
