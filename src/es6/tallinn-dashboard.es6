@@ -106,7 +106,10 @@ const init = (
 
     exporting: {
       csv: {
-        itemDelimiter: ";"
+        itemDelimiter: ";",
+        columnHeaderFormatter: function(series, key) {
+          return series.name;
+        }
       }
     },
 
@@ -311,6 +314,11 @@ const init = (
       name: d2.options[d2.selectedIndex].text,
       data: data2,
       color: seriesColors[1]
+    });
+    chart.addSeries({
+      name:
+        "Numeric values are averages, calculated with the formula: (Sum of each action status value in principle) / (number of actions in principle). The action status values are as follows: No Data = 1, No progress = 2, In progress = 3, Completed = 4. The numerical values are rounded as follows: 1.00 - 1.49 = No data, 1.50 - 2.49 = No progress, 2.50 - 3.49 = In progress, 3.50 - 4.00 = Completed.",
+      data: []
     });
   };
 

@@ -97,7 +97,10 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
 
     exporting: {
       csv: {
-        itemDelimiter: ";"
+        itemDelimiter: ";",
+        columnHeaderFormatter: function columnHeaderFormatter(series, key) {
+          return series.name;
+        }
       }
     },
 
@@ -178,7 +181,7 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
           return Object.keys(el.countries).forEach(function (key) {
             if (key == d1.options[d1.selectedIndex].value) {
               var relatedWebsite = el.countries[key].related_website === null ? "[not provided]" : '<a href="' + el.countries[key].related_website + '">' + el.countries[key].related_website + "</a>";
-              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<p><strong>" + el.title + " - " + el.explanation + "</strong></p>\n                <p>" + el.countries[key].report + "</p>\n                <p>Status: \n                    <span class=\"" + el.countries[key].status.toLowerCase().replace(" ", "-") + "\">\n                    " + el.countries[key].status + "\n                    </span>\n                </p>\n                <p>Related website: " + relatedWebsite + "</p>");
+              document.querySelector(bodyClass).insertAdjacentHTML("beforeend", "<p><strong>" + el.title + " - " + el.explanation + "</strong></p>\n                <p>" + el.countries[key].report + "</p>\n                <p>Status:\n                    <span class=\"" + el.countries[key].status.toLowerCase().replace(" ", "-") + "\">\n                    " + el.countries[key].status + "\n                    </span>\n                </p>\n                <p>Related website: " + relatedWebsite + "</p>");
             }
           });
         });
@@ -214,8 +217,8 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
           }
         });
 
-        data1.push(total1 / Object.keys(e.actions).length);
-        data2.push(total2 / Object.keys(e.actions).length);
+        data1.push(parseFloat((total1 / Object.keys(e.actions).length).toFixed(1)));
+        data2.push(parseFloat((total2 / Object.keys(e.actions).length).toFixed(1)));
       });
     } else {
       // on a selected principle
@@ -245,6 +248,10 @@ var init = function init(dataSet, highchartContainerId, dropdownIds, csvButtonCl
       name: d2.options[d2.selectedIndex].text,
       data: data2,
       color: seriesColors[1]
+    });
+    chart.addSeries({
+      name: "Numeric values are averages, calculated with the formula: (Sum of each action status value in principle) / (number of actions in principle). The action status values are as follows: No Data = 1, No progress = 2, In progress = 3, Completed = 4. The numerical values are rounded as follows: 1.00 - 1.49 = No data, 1.50 - 2.49 = No progress, 2.50 - 3.49 = In progress, 3.50 - 4.00 = Completed.",
+      data: []
     });
   };
 
